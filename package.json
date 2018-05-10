@@ -1,7 +1,7 @@
 {
   "name": "chainable-fetch",
   "version": "1.0.0",
-  "description": "The chainable fetch library",
+  "description": "The JSON friendly, string free HTTP request client.",
   "license": "ISC",
   "main": "index.js",
   "keywords": [
