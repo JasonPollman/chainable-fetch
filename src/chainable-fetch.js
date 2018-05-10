@@ -15,14 +15,14 @@ import chainable, { chainableGeneratorWithDefaults } from '@jasonpollman/chainab
 const fetch = typeof window !== 'undefined' ? window.fetch : require('node-fetch');
 
 /**
- * Stringifies object only, leaves other values untouched.
+ * Stringifies objects only, leaves other values untouched.
  * @param {Object|string} value The value to maybe stringify.
  * @returns {string} The original string input value, or the stringified value.
  */
 const maybeStringify = value => (_.isObject(value) ? JSON.stringify(value) : value);
 
 /**
- * Use to omit non-string, non-numeric, and non-object values from querystrings.
+ * Used to omit non-string, non-numeric, and non-object values from querystrings.
  * @param {any} value The value to inspect.
  * @returns {boolean} True if the value is a valid querystring value, false otherwise.
  */
@@ -36,7 +36,7 @@ const withoutNilValues = fp.pickBy(fp.negate(fp.isNil));
 
 /**
  * Converts an object to a querystring.
- * This differs from querystring.stringify in that it stringifies object values.
+ * This differs from querystring.stringify in that it JSON.stringify's object values.
  * @function
  */
 const querystringify = fp.compose(
@@ -58,8 +58,8 @@ const JSONHeaders = {
 };
 
 /**
- * Formats the HTTP request options by formatting the href to include the query string,
- * uppercasing the method, etc. You can pass additional options that node-fetch supports here
+ * Formats the HTTP request options by adding the query string to the base url,
+ * uppercasing the method, etc. You can pass additional options that [node-]fetch supports here
  * (such as 'follow', 'timeout', etc.).
  * @param {Object} options HTTP request options.
  * @returns {Object} The formatted request options.
@@ -82,12 +82,13 @@ const formatRequestOptions = ({
 
 /**
  * Processes a "non-raw" response.
- * This will consume the response with the desired `responseFormat`.
+ * This will consume the response with the desired response `format`.
  * Which is one of: text, json, buffer, blob etc. See node-fetch's
- * body class for more information.
+ * Body class for more information. If using the browser AFAIK you're
+ * limited to 'json' and 'text'.
  * @param {Object} response The http response from fetch.
  * @param {Object} options HTTP request options.
- * @returns {Buffer|Object|String} The response in the desired format.
+ * @returns {Buffer|Object|string} The response in the desired format.
  */
 async function consumeResponse(response, { json, format = 'text' }) {
   const method = json ? 'json' : format;
@@ -111,10 +112,8 @@ function handleResponseErrors(request, response, { url }) {
   });
 }
 
-
 /**
- * Creates a function that makes an HTTP request
- * using node-fetch and the provided method.
+ * Creates a function that makes an HTTP request using fetch and the provided method.
  * @param {string} method The HTTP method this http request method is for.
  * @returns {function} A http request function.
  */
@@ -172,6 +171,10 @@ const chainableFetch = (() => {
        * @returns {Proxy} The chainable child object.
        */
       path: function path(endpoint) {
+        if (!_.isString(endpoint) && !_.isNumber(endpoint)) {
+          throw new TypeError('Endpoint must be a string or numeric value');
+        }
+
         return chainable({
           ...this,
           tokens: [...this.tokens, endpoint],
@@ -183,20 +186,19 @@ const chainableFetch = (() => {
 
 /**
  * Creates a new chainable fetch api that will make requests to "options.host".
- * The given options will be merged with the defaults from above.
+ * The given options will be merged with the defaults from above and a chainable
+ * proxy object will be returned.
  * @function
  */
 export default (options) => {
   const requestOptions = _.isPlainObject(options) ? { ...options } : { host: options };
 
   // Not using url.parse for browser support.
-  // @todo This could be a bit more comprehensive.
+  /** @todo This could be a bit more comprehensive. */
   const [, protocol, hostname] = _.get(requestOptions, 'host', '').match(/(https?):\/\/(.*)/) || [];
 
   if (!protocol || !hostname) {
-    throw new TypeError(
-      'Host must be a valid url with a protocol and hostname.',
-    );
+    throw new TypeError('Host must be a valid url with a protocol and hostname.');
   }
 
   return chainableFetch({
