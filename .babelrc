@@ -1,0 +1,25 @@
+{
+  "sourceMaps": "inline",
+  "retainLines": true,
+  "presets": [
+    "stage-0",
+    [
+      "env",
+      {
+        "node": "6.0.0",
+        "browsers": ["last 2 versions"]
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-runtime",
+    "lodash"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  }
+}
