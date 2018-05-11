@@ -1,6 +1,6 @@
 {
   "name": "chainable-fetch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The JSON friendly, string free HTTP request client.",
   "license": "ISC",
   "main": "index.js",
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@jasonpollman/chainable": "^1.0.0",
+    "babel-runtime": "^6.26.0",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2"
   },
@@ -55,7 +56,6 @@
     "babel-preset-minify": "^0.4.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
-    "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
