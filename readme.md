@@ -15,7 +15,7 @@ to provide a clean, hassle free experience.
 import chainableFetch from 'chainable-fetch';
 
 const api = chainableFetch('https://my-api.com/');
-await api.v1.users.get({
+const response = await api.v1.users.get({
   query: {
     id: 1,
   },
@@ -96,13 +96,13 @@ await _.get(api, someValue).post();
 // Now, when the next version comes out, you can simply change `v1` to `v2`.
 const services = chainableFetch('https://my-api.com/').v1;
 
-await services.user.get({
+const user = await services.user.get({
   query: {
     id: 1234,
   },
 });
 
-await services.user.post({
+const result = await services.user.post({
   body: {
     name: 'Chuck Norris',
   },
@@ -180,7 +180,7 @@ import chainableFetch from 'chainable-fetch';
 
 const services = chainableFetch('https://my-services.com/');
 
-await services.some.endpoint[get|post|put|delete|patch|head]({
+const response = await services.some.endpoint[get|post|put|delete|patch|head]({
   // The query to append to the url.
   // This will be converted from an object to a querystring.
   // Note, this is slightly different than node's querystring.stringify,
