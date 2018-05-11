@@ -18,7 +18,8 @@
     "url",
     "uri",
     "util",
-    "utility"
+    "utility",
+    "promise"
   ],
   "author": {
     "name": "Jason James Pollman",

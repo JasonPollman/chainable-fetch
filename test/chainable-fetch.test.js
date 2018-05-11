@@ -82,6 +82,22 @@ describe('chainable-fetch', () => {
       });
     });
 
+    it(`Should successfully make a fetch request (${method}, buffer type)`, async () => {
+      const result = await api.json[method]({ type: 'buffer' });
+
+      expect(result).to.be.an.instanceOf(Buffer);
+      expect(JSON.parse(result.toString())).to.eql({
+        success: true,
+        body: {},
+        query: {},
+      });
+    });
+
+    it(`Should successfully make a fetch request (${method}, blob type)`, async () => {
+      const result = await api.json[method]({ type: 'blob' });
+      expect(result.type).to.equal('application/json; charset=utf-8');
+    });
+
     it(`Should successfully make a fetch request (${method}, global raw response)`, async () => {
       const api2 = chainableFetch({
         host,
