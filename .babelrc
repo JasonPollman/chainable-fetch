@@ -12,8 +12,8 @@
     ]
   ],
   "plugins": [
-    "transform-runtime",
-    "lodash"
+    "lodash",
+    "transform-runtime"
   ],
   "env": {
     "test": {

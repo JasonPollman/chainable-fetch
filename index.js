@@ -1,1 +1,1 @@
-module.exports = require('./dist/chainable-fetch.js');
+module.exports = require('./dist/index.js');

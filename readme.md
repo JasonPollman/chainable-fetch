@@ -1,2 +1,4 @@
 # chainable-fetch
-> The string free HTTP request client
+> The JSON friendly, string free HTTP request client.
+
+`chainable-fetch` is an 
