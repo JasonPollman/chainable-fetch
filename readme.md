@@ -264,7 +264,7 @@ setRequestType({
 
 const services = chainableFetch({
   host: 'https://my-xml-api.com/',
-  type: 'xml,
+  type: 'xml',
 });
 
 // POSTs '<user id="5">Chunk Norris</user>' to https://my-xml-api.com/user
