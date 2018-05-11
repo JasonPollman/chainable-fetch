@@ -270,7 +270,7 @@ const services = chainableFetch({
 // POSTs '<user id="5">Chunk Norris</user>' to https://my-xml-api.com/user
 // The response, per our request type, would be XML converted to a js object.
 const response = await services.user.post({
-  foo: {
+  user: {
     id: 5,
     $t: 'Chuck Norris',
   },
