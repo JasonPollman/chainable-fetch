@@ -1,12 +1,13 @@
 {
   "name": "chainable-fetch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The JSON friendly, string free HTTP request client.",
   "license": "ISC",
   "main": "index.js",
   "keywords": [
     "fetch",
     "node-fetch",
+    "request",
     "http",
     "https",
     "get",

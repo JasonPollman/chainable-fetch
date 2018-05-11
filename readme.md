@@ -31,8 +31,8 @@ just set the request type to `text`, `buffer` or any other supported type.
 
 **Configure request options once:**    
 You setup the headers, request type (text, json, etc.) when you create your API reference *once*.
-All requests will use these options and you can override them at individual the request level
-for the edge cases.
+All requests will use these options and you can override them at the individual request level
+for edge cases.
 
 This reduces code quantity and allows defaults to be set in a single place.
 
@@ -55,31 +55,27 @@ $ npm install chainable-fetch --save
 ```js
 import chainableFetch from 'chainable-fetch';
 
-const api = chainableFetch('https://swapi.co/');
+const swapi = chainableFetch('https://swapi.co/');
 
 // Make a couple of HTTP requests to the Star Wars API...
 // GET https://swapi.co/people
 // GET https://swapi.co/planets
 const [people, planets] = await Promise.all([
-  api.people.get(),
-  api.planets.get(),
+  swapi.people.get(),
+  swapi.planets.get(),
 ]);
 
 // You can even reference endpoints.
-const people = api.people;
+const people = swapi.people;
 const person = people[1].get();
 
 // You can chain together any endpoint!
-const example = chainableFetch({
+const exampleApi = chainableFetch({
   host: 'https://swapi.co/'
 });
 
-await example.foo.bar.bax.quxx.get({ headers, query });
-await example.foo.bar.bax.quxx.post({ headers, body });
-
-// You can also sub-reference endpoints.
-const baz = example.foo.bar;
-await bax.quxx.get();
+await exampleApi.foo.bar.bax.quxx.get({ headers, query });
+await exampleApi.foo.bar.bax.quxx.post({ headers, body });
 
 // Dynamic endpoints? Lodash's `get` method comes in handy...
 await _.get(api, someValue).post();
@@ -130,12 +126,12 @@ const api = chainableFetch('https://my-api.com/');
 // Or, you can provide options.
 // The `host` property is required, defaults shows.
 const api = chainableFetch({
-  host: 'https://my-api.com/',
+  host: '...',
 
   // The api type.
   // Can be one of: 'json', 'text', 'buffer', 'blob'.
   // This defines how the response is consumed and returned to you.
-  // For example, if json, fetch's `response.json()` is returned to you; if text response.text().
+  // For example, if json, fetch's `response.json()` is returned to you; if text, response.text().
   type: 'json',
 
   // If true, the actual "raw" fetch response will be returned.
