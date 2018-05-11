@@ -55,11 +55,11 @@ $ npm install chainable-fetch --save
 ```js
 import chainableFetch from 'chainable-fetch';
 
-const swapi = chainableFetch('https://swapi.co/');
+const swapi = chainableFetch('https://swapi.co/api');
 
 // Make a couple of HTTP requests to the Star Wars API...
-// GET https://swapi.co/people
-// GET https://swapi.co/planets
+// GET https://swapi.co/api/people
+// GET https://swapi.co/api/planets
 const [people, planets] = await Promise.all([
   swapi.people.get(),
   swapi.planets.get(),
@@ -71,7 +71,7 @@ const person = people[1].get();
 
 // You can chain together any endpoint!
 const exampleApi = chainableFetch({
-  host: 'https://swapi.co/'
+  host: 'https://example-host.com/'
 });
 
 await exampleApi.foo.bar.bax.quxx.get({ headers, query });
