@@ -11,7 +11,7 @@ import {
   toJson,
 } from 'xml2json';
 
-import chainableFetch, { setRequestType } from '../src';
+import chainableFetch, { setRequestType } from '../../src';
 
 /**
  * `assert.throws` with async support.

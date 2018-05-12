@@ -50,7 +50,8 @@ export const maybeStringify = value => (_.isObject(value) ? JSON.stringify(value
  */
 export const isOfQueryStringType = value => _.isString(value)
   || _.isNumber(value)
-  || _.isObject(value);
+  || _.isArray(value)
+  || _.isPlainObject(value);
 
 /**
  * Removes nil values from objects.
@@ -63,9 +64,10 @@ export const withoutNilValues = fp.pickBy(fp.negate(fp.isNil));
  * @function
  */
 export const getSanitizedHostname = fp.compose(
-  fp.replace(/\/$/, ''),
+  fp.replace(/\/+$/, ''),
   fp.trim,
   fp.getOr('', 'host'),
+  fp.identity,
 );
 
 /**
@@ -82,4 +84,5 @@ export const querystringify = fp.compose(
   fp.mapValues(encodeURIComponent),
   fp.mapValues(maybeStringify),
   fp.pickBy(isOfQueryStringType),
+  fp.identity,
 );
