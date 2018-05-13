@@ -169,6 +169,14 @@ const api = chainableFetch({
   // If unspecified, the native fetch implementation will be used
   // in the browser and node-fetch in node.
   fetch,
+
+  // Any other node fetch option...
+  // See https://github.com/bitinn/node-fetch#options for more info.
+  follow,
+  timeout,
+  compress,
+  size,
+  agent,
 })
 ```
 
@@ -209,6 +217,14 @@ const response = await services.some.endpoint[get|post|put|delete|patch|head]({
   // If true the actual "raw" fetch response will be returned.
   // Overrides the api's `raw` option above.
   raw: false,
+
+  // Any other node fetch option...
+  // See https://github.com/bitinn/node-fetch#options for more info.
+  follow,
+  timeout,
+  compress,
+  size,
+  agent,
 })
 ```
 
@@ -271,4 +287,12 @@ const response = await services.user.post({
     $t: 'Chuck Norris',
   },
 });
+```
+
+## Webpack Usage
+You'll need to ignore `node-fetch` in your webpack config to prevent it from being included in your
+bundle and blowing up.
+
+```js
+new webpack.IgnorePlugin(/^node-fetch$/)
 ```
