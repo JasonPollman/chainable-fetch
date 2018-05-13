@@ -1,4 +1,6 @@
+import fs from 'fs';
 import _ from 'lodash';
+import path from 'path';
 import sinon from 'sinon';
 
 import {
@@ -93,6 +95,23 @@ describe('chainable-fetch', () => {
       });
     });
 
+    it(`Should successfully make a fetch request (${method}, piping response)`, async () => {
+      const dest = path.join(process.cwd(), `${method}-example.jpg`);
+      const result = await api.file[method]({
+        type: 'buffer',
+        raw: true,
+      });
+
+      return new Promise((resolve, reject) => {
+        try {
+          result.body.pipe(fs.createWriteStream(dest));
+          result.body.once('end', () => fs.unlink(dest, resolve));
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+
     it(`Should successfully make a fetch request (${method}, blob type)`, async () => {
       const result = await api.json[method]({ type: 'blob' });
       expect(result.type).to.equal('application/json; charset=utf-8');
@@ -134,6 +153,20 @@ describe('chainable-fetch', () => {
       });
 
       expect(await api2.text[method]()).to.eql({ intercepted: true });
+    });
+
+    it(`Should handle response timeouts (${method} local request timeout set)`, () => assertThrowsAsync(
+      () => api.timeout[method]({ timeout: 50 }),
+      'network timeout at: http://localhost:5678/timeout',
+    ));
+
+    it(`Should handle response timeouts (${method} global request timeout set)`, () => {
+      const api2 = chainableFetch({ host, timeout: 50 });
+
+      return assertThrowsAsync(
+        () => api2.timeout[method](),
+        'network timeout at: http://localhost:5678/timeout',
+      );
     });
   });
 

@@ -1,5 +1,7 @@
+import fs from 'fs';
 import _ from 'lodash';
 import http from 'http';
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { tryJsonParse } from '../src/utils';
@@ -20,6 +22,14 @@ before(() => new Promise((resolve, reject) => {
 
   app.use('/text', (request, response) => {
     response.send('Hello World!');
+  });
+
+  app.use('/timeout', () => {
+    /* noop */
+  });
+
+  app.use('/file', (request, response) => {
+    fs.createReadStream(path.join(__dirname, 'data', 'photo.jpg')).pipe(response);
   });
 
   app.use('/200', (request, response) => {
