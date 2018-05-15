@@ -58,16 +58,16 @@ import chainableFetch from 'chainable-fetch';
 const swapi = chainableFetch('https://swapi.co/api');
 
 // Make a couple of HTTP requests to the Star Wars API...
-// GET https://swapi.co/api/people
+// GET https://swapi.co/api/starships
 // GET https://swapi.co/api/planets
-const [people, planets] = await Promise.all([
-  swapi.people.get(),
+const [starships, planets] = await Promise.all([
+  swapi.starships.get(),
   swapi.planets.get(),
 ]);
 
 // You can even reference endpoints.
 const people = swapi.people;
-const person = people[1].get();
+const person = await people[1].get();
 
 // You can chain together any endpoint!
 const exampleApi = chainableFetch({

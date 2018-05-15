@@ -105,7 +105,7 @@ describe('chainable-fetch', () => {
       return new Promise((resolve, reject) => {
         try {
           result.body.pipe(fs.createWriteStream(dest));
-          result.body.once('end', () => fs.unlink(dest, resolve));
+          result.body.once('end', () => fs.unlink(dest, err => (err ? reject(err) : resolve())));
         } catch (e) {
           reject(e);
         }
