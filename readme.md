@@ -1,6 +1,11 @@
 # chainable-fetch
 > The JSON friendly, string free HTTP request client.
 
+
+![npm](https://img.shields.io/npm/l/chainable-fetch.svg)
+![GitHub issues](https://img.shields.io/github/issues-raw/JasonPollman/chainable-fetch.svg)
+![Codecov](https://img.shields.io/codecov/c/github/JasonPollman/chainable-fetch.svg)
+
 **`chainable-fetch` is a HTTP request client tailored for JSON and ease of use.**    
 Most request libraries focus on single requests, `chainable-fetch` focuses on api reuse.
 
