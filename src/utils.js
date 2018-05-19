@@ -28,7 +28,7 @@ export const tryCatchReturn = (method, fallback, ...args) => {
  * @returns {any} The input value, or the parsed value.
  */
 export const tryJsonParse = value => (
-  (_.isString(value) && tryCatchReturn(JSON.parse, value, value)) || value
+  _.isString(value) ? tryCatchReturn(JSON.parse, value, value) : value
 );
 
 /**
