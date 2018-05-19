@@ -1,6 +1,6 @@
 {
   "name": "chainable-fetch",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The JSON friendly, string free HTTP request client.",
   "license": "ISC",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "wget",
     "promise",
     "chainable",
+    "chainable-fetch",
     "url",
     "uri",
     "util",

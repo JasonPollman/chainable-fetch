@@ -27,7 +27,9 @@ export const tryCatchReturn = (method, fallback, ...args) => {
  * @param {any} value The value to attempt to parse.
  * @returns {any} The input value, or the parsed value.
  */
-export const tryJsonParse = value => tryCatchReturn(JSON.parse, value, value);
+export const tryJsonParse = value => (
+  (_.isString(value) && tryCatchReturn(JSON.parse, value, value)) || value
+);
 
 /**
  * Attempt to execute JSON.stringify on value. If JSON.stringify fails, value is returned as given.
